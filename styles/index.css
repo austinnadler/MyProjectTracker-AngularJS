@@ -1,16 +1,15 @@
-input:focus {
+input, input:focus {
     outline: none;
 }
 
-textarea:focus {
-    outline: none;
-    border: none;
-}
-
-button:focus {
+textarea, textarea:focus {
     outline: none;
 }
 
-button {
+button, button:focus {
+    outline: none;
+}
+
+select, select:focus {
     outline: none;
 }

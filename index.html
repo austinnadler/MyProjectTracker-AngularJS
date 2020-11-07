@@ -17,6 +17,7 @@
 <body>
     <main>
         <div ng-app="app" ng-controller="ctrl" ng-cloak>
+
             <header class="w3-container  w3-center w3-blue w3-padding">
                 <h1>My Projects</h1>
             </header>
@@ -52,7 +53,46 @@
                 </p>
             </div>
             <!-- <div ng-include="'html/forms/projectForm.html'"></div> -->
-            <div ng-include="'html/tables/projects-table.html'"></div>
+
+
+
+            <h1 class="w3-center">Projects</h1>
+            <div class="w3-card w3-round" style="width: 90%; max-width: 1300px; margin: auto; margin-top: 10px;">
+                <table class="w3-table w3-bordered w3-hoverable w3-large">
+                    <thead>
+                        <th>ID</th>
+                        <th>Name</th>
+                        <th>Description</th>
+                        <th>Area</th>
+                        <th>Mgr</th>
+                        <!-- <th># Tasks</th> -->
+                        <th></th>
+                    </thead>
+                    <tbody ng-repeat="p in projects"> 
+                        <tr ng-click="expandProjectRow($index)">
+                            <td>{{p.id}}</td>
+                            <td>{{p.name}}</td>
+                            <td>{{p.description}}</td>
+                            <td>{{p.area}}</td>
+                            <td>{{p.manager}}</td>
+                            <!-- <td>{{ p.tasks.length }}</td> -->
+                            <td>
+                                <span ng-click="removeProject($index, p.id)" style="cursor: pointer;" class="w3-large w3-right w3-margin-right"><i class="fas fa-trash w3-text-red"></i></span>
+                            </td>
+                        </tr>            
+                        <!-- <tbody> -->
+                        <!-- <tr ng-repeat="t in tasks" ng-show="projectRowExpanded == $index">
+                            <td>{{t.id}}</td>
+                            <td>{{t.name}}</td>
+                            <td>{{t.description}}</td>
+                        </tr> -->
+                        <!-- </tbody> -->
+                    </tbody>
+                </table>                    
+            </div>
+            <!-- <div ng-include="'html/tables/projects-table.html'"></div> -->
+
+
 
             <div class="w3-center">
                 <button ng-click="toggleTaskFormVis()" ng-show="!taskFormVis" id="toggleTaskFormVis" class="w3-large w3-btn w3-blue w3-margin w3-round-xlarge"><i class="fas fa-plus"></i></button>
@@ -61,8 +101,9 @@
                 <h3 style="text-align: center;">New Task</h3>
                 <div class="w3-row-padding w3-large">
                     <div class="w3-half">
-                    <input ng-model="newTaskProject" class="w3-input" maxlength="20">
-                    <label class="w3-large">Project #</label>
+                    <!-- ng-options is similar to sql -- select p.id AS p.name to show the project name but give the <option> the id as the value -->
+                    <select ng-model="newTaskProject" ng-options="p.id as p.name for p in projects" class="w3-select"></select>
+                    <label class="w3-large">Project</label>
                 </div>
                 <div class="w3-half">
                     <input ng-model="newTaskName" class="w3-input" maxlength="30">
@@ -81,7 +122,33 @@
                 </p>
             </div>
             <!-- <div ng-include="'html/forms/taskForm.html'"></div> -->
-            <div ng-include="'html/tables/tasks-table.html'"></div>            
+
+
+
+            <h1 class="w3-center">Tasks</h1>
+            <div class="w3-card w3-round" style="width: 90%; max-width: 1300px; margin: auto; margin-top: 10px;">
+                <table class="w3-table w3-bordered w3-large">
+                    <thead>
+                        <th>ID</th>
+                        <th>Project ID</th>
+                        <th>Name</th>
+                        <th>Description</th>
+                        <th></th>
+                    </thead>
+                    <tbody>
+                        <tr ng-repeat="t in tasks">
+                            <td>{{t.id}}</td>
+                            <td>{{t.projectId}}</td>
+                            <td>{{t.name}}</td>
+                            <td>{{t.description}}</td>
+                            <td>
+                                <span ng-click="removeTask($index, t.id)" style="cursor: pointer;" class="w3-large w3-right w3-margin-right"><i class="fas fa-trash w3-text-red"></i></span>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>                    
+            </div>
+            <!-- <div ng-include="'html/tables/tasks-table.html'"></div> -->
         </div>
     </main>
 </body>

@@ -47,7 +47,7 @@ app.controller("ctrl", function ($scope, $http) {
             data: { name: name, description: description, area: area, manager: manager }
         }).then(function success() {
             $scope.projects.push(p);
-            $scope.toggleProjectFormVis();
+            $scope.projectFormVis = false;
         }, function failure(response) {
             console.log("Database error: " + response.data);
         });
@@ -65,8 +65,6 @@ app.controller("ctrl", function ($scope, $http) {
             console.log("Database error: " + response.data);
         });
     }
-
-    $scope.check = function(index) { console.log(`projects[${index}] clicked`)}
 
     function selectAllProjects() {
         $http({
@@ -91,7 +89,6 @@ app.controller("ctrl", function ($scope, $http) {
     //
 
     $scope.addTask = function() {
-        console.log("asdf");
         var projectId = $scope.newTaskProject;
         var name = $scope.newTaskName;
         var description = $scope.newTaskDescription;
