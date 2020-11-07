@@ -1,0 +1,16 @@
+input:focus {
+    outline: none;
+}
+
+textarea:focus {
+    outline: none;
+    border: none;
+}
+
+button:focus {
+    outline: none;
+}
+
+button {
+    outline: none;
+}

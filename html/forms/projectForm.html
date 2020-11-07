@@ -1,0 +1,28 @@
+<div ng-show="projectFormVis" class="w3-card w3-round w3-padding"
+style="width: 90%; max-width: 1300px; margin: auto; margin-top: 10px;">
+<h3 style="text-align: center;">New Project</h3>
+<div class="w3-row-padding w3-large">
+    <div class="w3-third">
+        <input ng-model="newName" class="w3-input" maxlength="30">
+        <label class="w3-large">Name</label>
+    </div>
+    <div class="w3-third">
+        <input ng-model="newArea" class="w3-input" maxlength="20">
+        <label class="w3-large">Area</label>
+    </div>
+    <div class="w3-third">
+        <input ng-model="newManager" class="w3-input" maxlength="20">
+        <label class="w3-large">Manager</label>
+    </div>
+</div>
+<div class="w3-large" style="margin: 0px 15px 0px 15px;">
+    <textarea ng-model="newDescription" class="w3-input" style="resize: none;"
+        maxlength="255"></textarea>
+    <label class="w3-large">Description</label>
+</div>
+<p class="w3-center">
+    <button ng-click="addProject()" class="w3-btn w3-round w3-large w3-blue w3-padding">Submit</button>
+    <button ng-click="hideAndClearForm()"
+        class="w3-btn w3-round w3-large w3-red w3-padding">Cancel</button>
+</p>
+</div>

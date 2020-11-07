@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <link rel="stylesheet" href="styles/index.css">
+    <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.6.9/angular.min.js"></script>
+    <!-- <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script> -->
+    <script src="https://kit.fontawesome.com/09a54ca737.js" crossorigin="anonymous"></script>
+    <!-- JavaScript classes -->
+    <script src="js/classes/Project.js"></script>
+    <script src="js/classes/Task.js"></script>
+    <!-- AngularJS scripts -->
+    <script src="js/angularjs/index.js"></script>
+</head>
+
+<body>
+    <main>
+        <div ng-app="app" ng-controller="ctrl" ng-cloak>
+            <header class="w3-container  w3-center w3-blue w3-padding">
+                <h1>My Projects</h1>
+            </header>
+            
+            <div class="w3-center">
+                <button ng-click="toggleProjectFormVis()" ng-show="!projectFormVis" id="toggleProjectFormVis" class="w3-large w3-btn w3-blue w3-margin w3-round-xlarge"><i class="fas fa-plus"></i></button>
+            </div>
+            <div ng-show="projectFormVis" class="w3-card w3-round w3-padding" style="width: 90%; max-width: 1300px; margin: auto; margin-top: 10px;">
+                <h3 style="text-align: center;">New Project</h3>
+                <div class="w3-row-padding w3-large">
+                    <div class="w3-third">
+                        <input ng-model="newProjectName" class="w3-input" maxlength="30">
+                        <label class="w3-large">Name</label>
+                    </div>
+                    <div class="w3-third">
+                        <input ng-model="newProjectArea" class="w3-input" maxlength="20">
+                        <label class="w3-large">Area</label>
+                    </div>
+                    <div class="w3-third">
+                        <input ng-model="newProjectManager" class="w3-input" maxlength="20">
+                        <label class="w3-large">Manager</label>
+                    </div>
+                </div>
+                <div class="w3-large" style="margin: 0px 15px 0px 15px;">
+                    <textarea ng-model="newProjectDescription" class="w3-input" style="resize: none;"
+                    maxlength="255"></textarea>
+                    <label class="w3-large">Description</label>
+                </div>
+                <p class="w3-center">
+                    <button ng-click="addProject()" class="w3-btn w3-round w3-large w3-blue w3-padding">Submit</button>
+                    <button ng-click="toggleProjectFormVis()"
+                    class="w3-btn w3-round w3-large w3-red w3-padding">Cancel</button>
+                </p>
+            </div>
+            <!-- <div ng-include="'html/forms/projectForm.html'"></div> -->
+            <div ng-include="'html/tables/projects-table.html'"></div>
+
+            <div class="w3-center">
+                <button ng-click="toggleTaskFormVis()" ng-show="!taskFormVis" id="toggleTaskFormVis" class="w3-large w3-btn w3-blue w3-margin w3-round-xlarge"><i class="fas fa-plus"></i></button>
+            </div>
+            <div ng-show="taskFormVis" class="w3-card w3-round w3-padding" style="width: 90%; max-width: 1300px; margin: auto; margin-top: 10px;">
+                <h3 style="text-align: center;">New Task</h3>
+                <div class="w3-row-padding w3-large">
+                    <div class="w3-half">
+                    <input ng-model="newTaskProject" class="w3-input" maxlength="20">
+                    <label class="w3-large">Project #</label>
+                </div>
+                <div class="w3-half">
+                    <input ng-model="newTaskName" class="w3-input" maxlength="30">
+                    <label class="w3-large">Name</label>
+                </div>
+                </div>
+                <div class="w3-large" style="margin: 0px 15px 0px 15px;">
+                    <textarea ng-model="newTaskDescription" class="w3-input" style="resize: none;"
+                    maxlength="255"></textarea>
+                    <label class="w3-large">Description</label>
+                </div>
+                <p class="w3-center">
+                    <button ng-click="addTask()" class="w3-btn w3-round w3-large w3-blue w3-padding">Submit</button>
+                    <button ng-click="toggleTaskFormVis()"
+                    class="w3-btn w3-round w3-large w3-red w3-padding">Cancel</button>
+                </p>
+            </div>
+            <!-- <div ng-include="'html/forms/taskForm.html'"></div> -->
+            <div ng-include="'html/tables/tasks-table.html'"></div>            
+        </div>
+    </main>
+</body>
+
+</html>

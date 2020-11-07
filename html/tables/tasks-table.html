@@ -1,0 +1,22 @@
+<div class="w3-card w3-round" style="width: 90%; max-width: 1300px; margin: auto; margin-top: 10px;">
+    <table class="w3-table w3-bordered w3-hoverable w3-large">
+        <thead>
+            <th>ID</th>
+            <th>Project ID</th>
+            <th>Name</th>
+            <th>Description</th>
+            <th></th>
+        </thead>
+        <tbody>
+            <tr ng-repeat="t in tasks" ng-click="check()">
+                <td>{{t.id}}</td>
+                <td>{{t.projectId}}</td>
+                <td>{{t.name}}</td>
+                <td>{{t.description}}</td>
+                <td>
+                    <span ng-click="removeTask($index, t.id)" style="cursor:pointer;" class="w3-large w3-right w3-margin-right"><i class="fas fa-trash w3-text-red"></i></span>
+                </td>
+            </tr>
+        </tbody>
+    </table>                    
+</div>
