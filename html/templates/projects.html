@@ -34,25 +34,25 @@
 </div>
 <h1 class="w3-center">Projects</h1>
 <div ng-hide="$scope.projects.length == 0" class="w3-card w3-round" style="width: 90%; max-width: 1300px; margin: auto; margin-top: 10px;">
-    <table class="w3-table w3-bordered w3-hoverable w3-large">
+    <table class="w3-table w3-bordered w3-large">
         <thead>
-            <th>ID</th>
-            <th>Name</th>
-            <th>Description</th>
-            <th>Area</th>
-            <th>Mgr</th>
+            <th style="vertical-align: bottom;">ID</th>
+            <th style="vertical-align: bottom;">Name</th>
+            <th style="vertical-align: bottom;">Description</th>
+            <th style="vertical-align: bottom;">Area</th>
+            <th style="vertical-align: bottom;">Mgr</th>
             <th></th>
             <th></th>
         </thead>
         <tbody ng-repeat="p in projects"> 
-            <tr ng-click="clickP($index)">
+            <tr>
                 <td>{{p.id}}</td>
                 <td>{{p.name}}</td>
                 <td>{{p.description}}</td>
                 <td>{{p.area}}</td>
                 <td>{{p.manager}}</td>
                 <td>
-                    <span ng-click="clickP($index)" style="cursor: pointer;"><i class="fas fa-edit w3-text-blue"></i></span>
+                    <span ng-click="getTasksForProject(p.id)" style="cursor: pointer;"><i class="fas fa-edit w3-text-blue"></i></span>
                 </td>
                 <td>
                     <span ng-click="removeProject($index, p.id)" style="cursor: pointer;" class="w3-large w3-right w3-margin-right"><i class="fas fa-trash w3-text-red"></i></span>

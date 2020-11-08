@@ -1,6 +1,6 @@
 var app = angular.module("app", ["ngRoute"]);
 
-app.config(function($routeProvider) {
+app.config(["$routeProvider", function($routeProvider) {
     $routeProvider
     .when("/projects", {
         templateUrl: "html/templates/projects.html",
@@ -10,12 +10,20 @@ app.config(function($routeProvider) {
         templateUrl: "html/templates/tasks.html",
         controller: "ctrlTasks"
     })
+    .when("/tasks/:projectId", {
+        templateUrl: "html/templates/tasks.html",
+        controller: "ctrlTasks"
+    })
     .otherwise({
         redirectTo: "/projects"
     });
-});
+}]);
 
-app.controller("ctrlProjects", function ($scope, $http, $location) {
+//
+// Projects Controller
+//
+
+app.controller("ctrlProjects", ["$scope", "$http", "$location", function ($scope, $http, $location) {
     $scope.projects = [];
     $scope.projectRowExpanded = -1;   
     $scope.projectFormVis = false;
@@ -25,10 +33,14 @@ app.controller("ctrlProjects", function ($scope, $http, $location) {
         $location.url(path);
     }
 
-    $scope.expandProjectRow = function(index) {
-        if($scope.projectRowExpanded == index)  { $scope.projectRowExpanded = -1; }
-        else                                    { $scope.projectRowExpanded = index; }
+    $scope.getTasksForProject = function(projectId) {
+        $location.url("tasks/" + projectId);
     }
+
+    // $scope.expandProjectRow = function(index) {
+    //     if($scope.projectRowExpanded == index)  { $scope.projectRowExpanded = -1; }
+    //     else                                    { $scope.projectRowExpanded = index; }
+    // }
 
     $scope.toggleProjectFormVis = function() {
         $scope.projectFormVis = !$scope.projectFormVis;
@@ -81,14 +93,30 @@ app.controller("ctrlProjects", function ($scope, $http, $location) {
             console.log("Database error: " + response.data);
         });
     }
-});
+}]);
 
-app.controller("ctrlTasks", function ($scope, $http, $location) {
+//
+// Tasks Controller
+//
+
+app.controller("ctrlTasks", ["$scope", "$http", "$location", "$routeParams", function ($scope, $http, $location, $routeParams) {
+    $scope.selectedProject = $routeParams.projectId;
     $scope.tasks = [];
     $scope.projects = [];
+    // $scope.selectedProzject;
     $scope.taskFormVis = false;
-    selectAllTasks();
-    selectAllProjects();
+    selectTasks();
+    selectProjects();
+
+    // console.log($scope.tasks.length);
+    // console.log($scope.tasks);
+    // var task = $scope.tasks[0];
+    // console.log(task);
+
+
+
+    // selectTasksForProject();
+    
 
     $scope.routeTo = function(path) {
         $location.url(path);
@@ -129,35 +157,45 @@ app.controller("ctrlTasks", function ($scope, $http, $location) {
         });
     }
 
-    function selectAllTasks() {
+    function selectTasks() {
         $http({
             method: "get",
-            url: "php/task/selectAllTasks.php"
+            url: "php/task/selectTasks.php"
             // data: { projectId: id}
         }).then(function success(response) { // php returns records, these are some of the fields. It also gets the project id and description because this is going to be it's own page.
             var arr = response.data;
-            // $scope.tasks = arr;
             for(var i = 0; i < arr.length; i++) {
                 var t = arr[i];
-                $scope.tasks.push(new Task(t.task_name, t.task_desc, t.project_id, t.task_id));
+                if($scope.selectedProject) {
+                    if(t.project_id == $scope.selectedProject)
+                        $scope.tasks.push(new Task(t.task_name, t.task_desc, t.project_id, t.task_id));
+                } else {
+                    $scope.tasks.push(new Task(t.task_name, t.task_desc, t.project_id, t.task_id));
+                }
             }
         }, function failure(response) {
             console.log("Database error: " + response.data);
         });
     }
 
-    function selectAllProjects() {
+    function selectProjects() {
         $http({
             method: "get",
             url: "php/project/selectAllProjects.php"
         }).then(function success(response) {
             var arr = response.data;            
             for(var i = 0; i < arr.length; i++) {
-                $scope.projects.push(new Project(arr[i].name, arr[i].description, arr[i].area, arr[i].manager, arr[i].id));
+                if($scope.selectedProject) {
+                    if(arr[i].id == $scope.selectedProject)
+                        $scope.selectedProject = arr[i];
+                } else {
+                    $scope.projects.push(new Project(arr[i].name, arr[i].description, arr[i].area, arr[i].manager, arr[i].id));
+                }
+                
             }
         }, function failure(response) {
             console.log("Database error: " + response.data);
         });
     }
-});
+}]);
 

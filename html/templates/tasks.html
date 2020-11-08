@@ -29,14 +29,14 @@
         class="w3-btn w3-round w3-large w3-red w3-padding">Cancel</button>
     </p>
 </div>
-<h1 class="w3-center">Tasks</h1>
+<h1 class="w3-center">Tasks <span ng-show="selectedProject">for <span class="w3-text-green">{{selectedProject.name}}</span></span></h1>
 <div ng-hide="$scope.tasks.length == 0" class="w3-card w3-round" style="width: 90%; max-width: 1300px; margin: auto; margin-top: 10px;">
     <table class="w3-table w3-bordered w3-large">
         <thead>
-            <th>ID</th>
-            <th>Project ID</th>
-            <th>Name</th>
-            <th>Description</th>
+            <th style="vertical-align: bottom;">ID</th>
+            <th style="vertical-align: bottom;">Project ID</th>
+            <th style="vertical-align: bottom;">Name</th>
+            <th style="vertical-align: bottom;">Description</th>
             <th></th>
         </thead>
         <tbody>
@@ -45,6 +45,9 @@
                 <td>{{t.projectId}}</td>
                 <td>{{t.name}}</td>
                 <td>{{t.description}}</td>
+                <!-- <td>
+                    <span ng-click="routeTo('tasks/1')" style="cursor: pointer;"><i class="fas fa-edit w3-text-blue"></i></span>
+                </td> -->
                 <td>
                     <span ng-click="removeTask($index, t.id)" style="cursor: pointer;" class="w3-large w3-right w3-margin-right"><i class="fas fa-trash w3-text-red"></i></span>
                 </td>

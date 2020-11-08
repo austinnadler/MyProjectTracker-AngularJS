@@ -13,3 +13,7 @@ button, button:focus {
 select, select:focus {
     outline: none;
 }
+
+th {
+    vertical-align: bottom;
+}
