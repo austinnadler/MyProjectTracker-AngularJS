@@ -7,6 +7,7 @@
     try {
         $sql = 'select t.id as task_id, t.project$id as project_id, t.name as task_name, t.description as task_desc, p.name as project_name, p.description as project_desc from projecttracker.task as t, projecttracker.project as p where p.id = t.project$id';
         $statement = $pdo->query($sql);
+        $rows = [];
         while($row = $statement->fetch()) {
             $rows[] = $row;
         }        

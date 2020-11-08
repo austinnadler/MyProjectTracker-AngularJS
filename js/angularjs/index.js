@@ -1,22 +1,29 @@
-var app = angular.module("app", []);
+var app = angular.module("app", ["ngRoute"]);
 
-app.controller("ctrl", function ($scope, $http) {
+app.config(function($routeProvider) {
+    $routeProvider
+    .when("/projects", {
+        templateUrl: "html/templates/projects.html",
+        controller: "ctrlProjects"
+    })
+    .when("/tasks", {
+        templateUrl: "html/templates/tasks.html",
+        controller: "ctrlTasks"
+    })
+    .otherwise({
+        redirectTo: "/projects"
+    });
+});
 
-    //
-    // Projects
-    //
-
-    // Body
+app.controller("ctrlProjects", function ($scope, $http, $location) {
     $scope.projects = [];
-    $scope.tasks = [];
-
     $scope.projectRowExpanded = -1;   
     $scope.projectFormVis = false;
-    $scope.taskFormVis = false;
-
     selectAllProjects();
-    selectAllTasks();
-    // End Body
+
+    $scope.routeTo = function(path) {
+        $location.url(path);
+    }
 
     $scope.expandProjectRow = function(index) {
         if($scope.projectRowExpanded == index)  { $scope.projectRowExpanded = -1; }
@@ -26,11 +33,6 @@ app.controller("ctrl", function ($scope, $http) {
     $scope.toggleProjectFormVis = function() {
         $scope.projectFormVis = !$scope.projectFormVis;
         $scope.newProjectName = $scope.newProjectDescription = $scope.newProjectArea = $scope.newProjectManager = "";
-    }
-
-    $scope.toggleTaskFormVis = function() {
-        $scope.taskFormVis = !$scope.taskFormVis;
-        $scope.newTaskProject = $scope.newTaskName = $scope.newTaskDescription = "";
     }
 
     $scope.addProject = function() {
@@ -71,7 +73,7 @@ app.controller("ctrl", function ($scope, $http) {
             method: "get",
             url: "php/project/selectAllProjects.php"
         }).then(function success(response) {
-            var arr = response.data;
+            var arr = response.data;            
             for(var i = 0; i < arr.length; i++) {
                 $scope.projects.push(new Project(arr[i].name, arr[i].description, arr[i].area, arr[i].manager, arr[i].id));
             }
@@ -79,14 +81,23 @@ app.controller("ctrl", function ($scope, $http) {
             console.log("Database error: " + response.data);
         });
     }
+});
 
-    //
-    // End Projects
-    //
+app.controller("ctrlTasks", function ($scope, $http, $location) {
+    $scope.tasks = [];
+    $scope.projects = [];
+    $scope.taskFormVis = false;
+    selectAllTasks();
+    selectAllProjects();
 
-    //
-    // Tasks
-    //
+    $scope.routeTo = function(path) {
+        $location.url(path);
+    }
+
+    $scope.toggleTaskFormVis = function() {
+        $scope.taskFormVis = !$scope.taskFormVis;
+        $scope.newTaskProject = $scope.newTaskName = $scope.newTaskDescription = "";
+    }
 
     $scope.addTask = function() {
         var projectId = $scope.newTaskProject;
@@ -135,7 +146,18 @@ app.controller("ctrl", function ($scope, $http) {
         });
     }
 
-    //
-    // End Tasks
-    //
+    function selectAllProjects() {
+        $http({
+            method: "get",
+            url: "php/project/selectAllProjects.php"
+        }).then(function success(response) {
+            var arr = response.data;            
+            for(var i = 0; i < arr.length; i++) {
+                $scope.projects.push(new Project(arr[i].name, arr[i].description, arr[i].area, arr[i].manager, arr[i].id));
+            }
+        }, function failure(response) {
+            console.log("Database error: " + response.data);
+        });
+    }
 });
+

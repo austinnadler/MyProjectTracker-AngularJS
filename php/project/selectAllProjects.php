@@ -7,6 +7,7 @@
     try {
         $sql = 'select id, name, description, area, manager from projecttracker.project';
         $statement = $pdo->query($sql);
+        $rows = [];
         while($row = $statement->fetch()) {
             $rows[] = $row;
         }        

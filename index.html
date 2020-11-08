@@ -1,156 +1,26 @@
 <!DOCTYPE html>
 <html>
-
-<head>
-    <link rel="stylesheet" href="styles/index.css">
-    <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
-    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.6.9/angular.min.js"></script>
-    <!-- <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script> -->
-    <script src="https://kit.fontawesome.com/09a54ca737.js" crossorigin="anonymous"></script>
-    <!-- JavaScript classes -->
-    <script src="js/classes/Project.js"></script>
-    <script src="js/classes/Task.js"></script>
-    <!-- AngularJS scripts -->
-    <script src="js/angularjs/index.js"></script>
-</head>
-
-<body>
-    <main>
-        <div ng-app="app" ng-controller="ctrl" ng-cloak>
-
-            <header class="w3-container  w3-center w3-blue w3-padding">
-                <h1>My Projects</h1>
-            </header>
-            
-            <div class="w3-center">
-                <button ng-click="toggleProjectFormVis()" ng-show="!projectFormVis" id="toggleProjectFormVis" class="w3-large w3-btn w3-blue w3-margin w3-round-xlarge"><i class="fas fa-plus"></i></button>
+    <head>
+        <link rel="stylesheet" href="styles/index.css">
+        <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
+        <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.6.9/angular.min.js"></script>
+        <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.6.9/angular-route.js"></script>
+        <script src="https://kit.fontawesome.com/09a54ca737.js" crossorigin="anonymous"></script>
+        <script src="js/classes/Project.js"></script>
+        <script src="js/classes/Task.js"></script>
+        <script src="js/angularjs/index.js"></script>
+    </head>
+    <body>
+        <main>
+            <div ng-app="app" ng-cloak>
+                <header class="w3-container  w3-center w3-blue w3-padding">
+                    <h1>My Project Tracker</h1>
+                </header>            
+                <ng-view></ng-view>
+                <footer>
+                    <p class="w3-tiny w3-text-grey w3-center w3-margin">&copy; Austin Nadler</p>
+                </footer>      
             </div>
-            <div ng-show="projectFormVis" class="w3-card w3-round w3-padding" style="width: 90%; max-width: 1300px; margin: auto; margin-top: 10px;">
-                <h3 style="text-align: center;">New Project</h3>
-                <div class="w3-row-padding w3-large">
-                    <div class="w3-third">
-                        <input ng-model="newProjectName" class="w3-input" maxlength="30">
-                        <label class="w3-large">Name</label>
-                    </div>
-                    <div class="w3-third">
-                        <input ng-model="newProjectArea" class="w3-input" maxlength="20">
-                        <label class="w3-large">Area</label>
-                    </div>
-                    <div class="w3-third">
-                        <input ng-model="newProjectManager" class="w3-input" maxlength="20">
-                        <label class="w3-large">Manager</label>
-                    </div>
-                </div>
-                <div class="w3-large" style="margin: 0px 15px 0px 15px;">
-                    <textarea ng-model="newProjectDescription" class="w3-input" style="resize: none;"
-                    maxlength="255"></textarea>
-                    <label class="w3-large">Description</label>
-                </div>
-                <p class="w3-center">
-                    <button ng-click="addProject()" class="w3-btn w3-round w3-large w3-blue w3-padding">Submit</button>
-                    <button ng-click="toggleProjectFormVis()"
-                    class="w3-btn w3-round w3-large w3-red w3-padding">Cancel</button>
-                </p>
-            </div>
-            <!-- <div ng-include="'html/forms/projectForm.html'"></div> -->
-
-
-
-            <h1 class="w3-center">Projects</h1>
-            <div class="w3-card w3-round" style="width: 90%; max-width: 1300px; margin: auto; margin-top: 10px;">
-                <table class="w3-table w3-bordered w3-hoverable w3-large">
-                    <thead>
-                        <th>ID</th>
-                        <th>Name</th>
-                        <th>Description</th>
-                        <th>Area</th>
-                        <th>Mgr</th>
-                        <!-- <th># Tasks</th> -->
-                        <th></th>
-                    </thead>
-                    <tbody ng-repeat="p in projects"> 
-                        <tr ng-click="expandProjectRow($index)">
-                            <td>{{p.id}}</td>
-                            <td>{{p.name}}</td>
-                            <td>{{p.description}}</td>
-                            <td>{{p.area}}</td>
-                            <td>{{p.manager}}</td>
-                            <!-- <td>{{ p.tasks.length }}</td> -->
-                            <td>
-                                <span ng-click="removeProject($index, p.id)" style="cursor: pointer;" class="w3-large w3-right w3-margin-right"><i class="fas fa-trash w3-text-red"></i></span>
-                            </td>
-                        </tr>            
-                        <!-- <tbody> -->
-                        <!-- <tr ng-repeat="t in tasks" ng-show="projectRowExpanded == $index">
-                            <td>{{t.id}}</td>
-                            <td>{{t.name}}</td>
-                            <td>{{t.description}}</td>
-                        </tr> -->
-                        <!-- </tbody> -->
-                    </tbody>
-                </table>                    
-            </div>
-            <!-- <div ng-include="'html/tables/projects-table.html'"></div> -->
-
-
-
-            <div class="w3-center">
-                <button ng-click="toggleTaskFormVis()" ng-show="!taskFormVis" id="toggleTaskFormVis" class="w3-large w3-btn w3-blue w3-margin w3-round-xlarge"><i class="fas fa-plus"></i></button>
-            </div>
-            <div ng-show="taskFormVis" class="w3-card w3-round w3-padding" style="width: 90%; max-width: 1300px; margin: auto; margin-top: 10px;">
-                <h3 style="text-align: center;">New Task</h3>
-                <div class="w3-row-padding w3-large">
-                    <div class="w3-half">
-                    <!-- ng-options is similar to sql -- select p.id AS p.name to show the project name but give the <option> the id as the value -->
-                    <select ng-model="newTaskProject" ng-options="p.id as p.name for p in projects" class="w3-select"></select>
-                    <label class="w3-large">Project</label>
-                </div>
-                <div class="w3-half">
-                    <input ng-model="newTaskName" class="w3-input" maxlength="30">
-                    <label class="w3-large">Name</label>
-                </div>
-                </div>
-                <div class="w3-large" style="margin: 0px 15px 0px 15px;">
-                    <textarea ng-model="newTaskDescription" class="w3-input" style="resize: none;"
-                    maxlength="255"></textarea>
-                    <label class="w3-large">Description</label>
-                </div>
-                <p class="w3-center">
-                    <button ng-click="addTask()" class="w3-btn w3-round w3-large w3-blue w3-padding">Submit</button>
-                    <button ng-click="toggleTaskFormVis()"
-                    class="w3-btn w3-round w3-large w3-red w3-padding">Cancel</button>
-                </p>
-            </div>
-            <!-- <div ng-include="'html/forms/taskForm.html'"></div> -->
-
-
-
-            <h1 class="w3-center">Tasks</h1>
-            <div class="w3-card w3-round" style="width: 90%; max-width: 1300px; margin: auto; margin-top: 10px;">
-                <table class="w3-table w3-bordered w3-large">
-                    <thead>
-                        <th>ID</th>
-                        <th>Project ID</th>
-                        <th>Name</th>
-                        <th>Description</th>
-                        <th></th>
-                    </thead>
-                    <tbody>
-                        <tr ng-repeat="t in tasks">
-                            <td>{{t.id}}</td>
-                            <td>{{t.projectId}}</td>
-                            <td>{{t.name}}</td>
-                            <td>{{t.description}}</td>
-                            <td>
-                                <span ng-click="removeTask($index, t.id)" style="cursor: pointer;" class="w3-large w3-right w3-margin-right"><i class="fas fa-trash w3-text-red"></i></span>
-                            </td>
-                        </tr>
-                    </tbody>
-                </table>                    
-            </div>
-            <!-- <div ng-include="'html/tables/tasks-table.html'"></div> -->
-        </div>
-    </main>
-</body>
-
+        </main>
+    </body>
 </html>
