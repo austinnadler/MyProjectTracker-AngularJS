@@ -23,7 +23,7 @@ app.config(["$routeProvider", function($routeProvider) {
 // Projects Controller
 //
 
-app.controller("ctrlProjects", ["$scope", "$http", "$location", function ($scope, $http, $location) {
+app.controller("ctrlProjects", ["$scope", "$http", "$location", "$route", function ($scope, $http, $location, $route) {
     $scope.projects = [];
     $scope.projectRowExpanded = -1;   
     $scope.projectFormVis = false;
@@ -61,7 +61,7 @@ app.controller("ctrlProjects", ["$scope", "$http", "$location", function ($scope
             data: { name: name, description: description, area: area, manager: manager }
         }).then(function success() {
             $scope.projects.push(p);
-            $scope.projectFormVis = false;
+            $route.reload();
         }, function failure(response) {
             console.log("Database error: " + response.data);
         });
@@ -99,24 +99,13 @@ app.controller("ctrlProjects", ["$scope", "$http", "$location", function ($scope
 // Tasks Controller
 //
 
-app.controller("ctrlTasks", ["$scope", "$http", "$location", "$routeParams", function ($scope, $http, $location, $routeParams) {
+app.controller("ctrlTasks", ["$scope", "$http", "$location", "$route","$routeParams", function ($scope, $http, $location, $route,$routeParams) {
     $scope.selectedProject = $routeParams.projectId;
     $scope.tasks = [];
     $scope.projects = [];
-    // $scope.selectedProzject;
     $scope.taskFormVis = false;
     selectTasks();
-    selectProjects();
-
-    // console.log($scope.tasks.length);
-    // console.log($scope.tasks);
-    // var task = $scope.tasks[0];
-    // console.log(task);
-
-
-
-    // selectTasksForProject();
-    
+    selectProjects();    
 
     $scope.routeTo = function(path) {
         $location.url(path);
@@ -139,7 +128,7 @@ app.controller("ctrlTasks", ["$scope", "$http", "$location", "$routeParams", fun
             data: { projectId: projectId, name: name, description: description }
         }).then(function success(response) {
             $scope.tasks.push(t);
-            $scope.taskFormVis = false;
+            $route.reload();
         }, function failure(response) {
             console.log("Database error" + response.data);
         });
@@ -168,9 +157,9 @@ app.controller("ctrlTasks", ["$scope", "$http", "$location", "$routeParams", fun
                 var t = arr[i];
                 if($scope.selectedProject) {
                     if(t.project_id == $scope.selectedProject)
-                        $scope.tasks.push(new Task(t.task_name, t.task_desc, t.project_id, t.task_id));
+                        $scope.tasks.push(new Task(t.task_name, t.task_desc, t.project_id, t.project_name, t.project_desc, t.task_id));
                 } else {
-                    $scope.tasks.push(new Task(t.task_name, t.task_desc, t.project_id, t.task_id));
+                    $scope.tasks.push(new Task(t.task_name, t.task_desc, t.project_id, t.project_name, t.project_desc, t.task_id));
                 }
             }
         }, function failure(response) {

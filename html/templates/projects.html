@@ -1,9 +1,9 @@
 <div class="w3-center w3-margin">
-    <span ng-click="routeTo('projects')" class="w3-btn w3-blue">Projects</span>
-    <span ng-click="routeTo('tasks')" class="w3-btn w3-text-blue">Tasks</span>
+    <span ng-click="routeTo('projects')" class="w3-btn w3-round w3-blue">Projects</span>
+    <span ng-click="routeTo('tasks')" class="w3-btn w3-round w3-text-blue">Tasks</span>
 </div>
 <div class="w3-center">
-    <button ng-click="toggleProjectFormVis()" ng-show="!projectFormVis" id="toggleProjectFormVis" class="w3-large w3-btn w3-blue w3-margin w3-round-xlarge"><i class="fas fa-plus"></i></button>
+    <button ng-click="toggleProjectFormVis()" ng-show="!projectFormVis" id="toggleProjectFormVis" class="w3-large w3-btn w3-round w3-blue w3-margin"><i class="fas fa-plus"></i></button>
 </div>
 <div ng-show="projectFormVis" class="w3-card w3-round w3-padding" style="width: 90%; max-width: 1300px; margin: auto; margin-top: 10px;">
     <h3 style="text-align: center;">New Project</h3>
@@ -36,17 +36,15 @@
 <div ng-hide="$scope.projects.length == 0" class="w3-card w3-round" style="width: 90%; max-width: 1300px; margin: auto; margin-top: 10px;">
     <table class="w3-table w3-bordered w3-large">
         <thead>
-            <th style="vertical-align: bottom;">ID</th>
-            <th style="vertical-align: bottom;">Name</th>
-            <th style="vertical-align: bottom;">Description</th>
-            <th style="vertical-align: bottom;">Area</th>
-            <th style="vertical-align: bottom;">Mgr</th>
-            <th></th>
-            <th></th>
+            <th style="width: 20%; vertical-align: bottom;">Name</th>
+            <th style="width: 50%; vertical-align: bottom;">Description</th>
+            <th style="width: 14%; vertical-align: bottom;">Area</th>
+            <th style="width: 14%; vertical-align: bottom;">Mgr</th>
+            <th style="width: 1%;"></th>
+            <th style="width: 1%;"></th>
         </thead>
         <tbody ng-repeat="p in projects"> 
             <tr>
-                <td>{{p.id}}</td>
                 <td>{{p.name}}</td>
                 <td>{{p.description}}</td>
                 <td>{{p.area}}</td>
