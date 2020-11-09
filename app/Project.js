@@ -5,7 +5,7 @@ class Project {
     description;
     area;
     manager;
-    tasks = [];
+    // tasks = [];
 
     constructor(name, description, area, manager, id) {
         this.name = name;
@@ -13,11 +13,11 @@ class Project {
         this.area = area;
         this.manager = manager;
         this.id = id;
-        this.tasks = [];
+        // this.tasks = [];
     }
 
-    addTask(task) {
-        this.tasks.push(task);
-    }
+    // addTask(task) {
+    //     this.tasks.push(task);
+    // }
 
 }

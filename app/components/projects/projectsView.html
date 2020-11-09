@@ -35,10 +35,10 @@
 <h1 class="w3-center">Projects</h1>
 
 <div ng-hide="$scope.projects.length == 0" style="width: 99%; max-width: 1300px; margin: auto; text-align: center;">
-    <div ng-repeat="p in projects" class="project-card w3-card w3-round">
+    <div ng-repeat="p in projects" ng-click="getTasksForProject(p.id)" class="project-card w3-card w3-round">
         <div class="button-pane">
-            <span ng-click="getTasksForProject(p.id)"><i class="btn fas fa-edit w3-text-blue"></i></span>
-            <span ng-click="removeProject($index, p.id)"><i class="btn fas fa-trash w3-text-red"></i></span>
+            <span ng-click="$event.stopPropagation();"><i class="btn fas fa-edit w3-text-blue"></i></span>
+            <span ng-click="removeProject($index, p.id); $event.stopPropagation(); "><i class="btn fas fa-trash w3-text-red"></i></span>
         </div>
         <br>
         <div style="margin-left: 20px; margin-right: 20px;">
