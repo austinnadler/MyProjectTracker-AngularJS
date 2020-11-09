@@ -1,4 +1,3 @@
-
 app.controller("ctrlTasks", ["$scope", "$http", "$location", "$route","$routeParams", function ($scope, $http, $location, $route, $routeParams) {
     $scope.selectedProject = $routeParams.projectId;
     $scope.tasks = [];

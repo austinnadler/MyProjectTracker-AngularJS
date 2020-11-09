@@ -3,7 +3,7 @@
     <span ng-click="routeTo('tasks')"class="w3-btn route-btn w3-round w3-text-blue">Tasks</span>
 </div>
 <div class="w3-center">
-    <button ng-click="showNewProjectForm()" ng-show="!projectFormVis" id="toggleProjectFormVis" class="w3-large w3-btn w3-round w3-blue w3-margin"><i class="fas fa-plus"></i></button>
+    <button ng-click="showNewProjectForm()" ng-show="!projectFormVis" class="w3-large w3-btn w3-round w3-blue w3-margin"><i class="fas fa-plus"></i></button>
 </div>
 <form ng-show="projectFormVis" class="w3-card w3-round w3-padding" style="width: 90%; max-width: 1300px; margin: auto; margin-top: 10px;">
     <h3 style="text-align: center;">New Project</h3>
@@ -22,8 +22,7 @@
         </div>
     </div>
     <div style="margin: 0px 15px 0px 15px;">
-        <textarea ng-model="newProjectDescription" class="w3-input" style="resize: none;"
-        maxlength="255" required></textarea>
+        <textarea ng-model="newProjectDescription" class="w3-input" maxlength="255" style="resize: vertical;" required></textarea>
         <label class="w3-large">Description</label>
     </div>
     <p class="w3-center">
@@ -49,8 +48,7 @@
         </div>
     </div>
     <div style="margin: 0px 15px 0px 15px;">
-        <textarea ng-model="editThisProject.description" class="w3-input" style="resize: none;"
-        maxlength="255" required></textarea>
+        <textarea ng-model="editThisProject.description" class="w3-input" maxlength="255" style="resize: vertical;" required></textarea>
         <label class="w3-large">Description</label>
     </div>
     <p class="w3-center">

@@ -21,8 +21,7 @@
         </div>
     </div>
     <div style="margin: 0px 15px 0px 15px;">
-        <textarea ng-model="newTaskDescription" class="w3-input" style="resize: none;"
-        maxlength="255" required></textarea>
+        <textarea ng-model="newTaskDescription" class="w3-input" style="resize: vertical;" maxlength="255" required></textarea>
         <label class="w3-large">Description</label>
     </div>
     <p class="w3-center">
@@ -45,8 +44,7 @@
         </div>
     </div>
     <div style="margin: 0px 15px 0px 15px;">
-        <textarea ng-model="editThisTask.description" class="w3-input" style="resize: none;"
-        maxlength="255" required></textarea>
+        <textarea ng-model="editThisTask.description" class="w3-input" style="resize: vertical;" maxlength="255" required></textarea>
         <label class="w3-large">Description</label>
     </div>
     <p class="w3-center">
@@ -68,7 +66,7 @@
             </thead>
             <tbody>
                 <tr ng-repeat="t in tasks | orderBy: 'projectName'">
-                    <td>{{t.projectName}}</td>
+                    <td><a ng-click="routeTo('tasks/' + t.projectId)" class="task-link">{{t.projectName}}</a></td>
                     <td>{{t.name}}</td>
                     <td>{{t.description}}</td>
                     <td>
