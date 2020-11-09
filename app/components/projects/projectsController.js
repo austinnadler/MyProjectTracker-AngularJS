@@ -55,10 +55,6 @@ app.controller("ctrlProjects", ["$scope", "$http", "$location", "$route", functi
         });
     }
 
-    $scope.routeTo = function(path) {
-        $location.url(path);
-    }
-
     $scope.getTasksForProject = function(projectId) {
         $location.url("tasks/" + projectId);
     }

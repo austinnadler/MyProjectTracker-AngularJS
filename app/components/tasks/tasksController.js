@@ -27,10 +27,6 @@ app.controller("ctrlTasks", ["$scope", "$http", "$location", "$route","$routePar
         $scope.toggleEditTaskFormVis();
     }
 
-    $scope.routeTo = function(path) {
-        $location.url(path);
-    }
-
     $scope.toggleTaskFormVis = function() {
         $scope.taskFormVis = !$scope.taskFormVis;
         $scope.newTaskProject = $scope.newTaskName = $scope.newTaskDescription = "";

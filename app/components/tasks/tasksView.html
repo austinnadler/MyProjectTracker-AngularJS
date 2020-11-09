@@ -1,6 +1,6 @@
 <div class="w3-center w3-margin">
-    <span ng-click="routeTo('projects')" class="w3-btn route-btn w3-round w3-text-blue">Projects</span>
-    <span ng-click="routeTo('tasks')"class="w3-btn route-btn w3-round w3-blue">Tasks</span>
+    <a href="#!/projects" class="w3-btn route-btn w3-round w3-text-blue">Projects</a>
+    <a href="#!/tasks"class="w3-btn route-btn w3-round w3-blue">Tasks</a>
 </div>
 <!-- Only allow new tasks to be created when selectedProject is set. (i.e. when the url ends with tasks/{projectId}) -->
 <div ng-show="selectedProject" class="w3-center">
@@ -66,7 +66,7 @@
             </thead>
             <tbody>
                 <tr ng-repeat="t in tasks | orderBy: 'projectName'">
-                    <td><a ng-click="routeTo('tasks/' + t.projectId)" class="task-link">{{t.projectName}}</a></td>
+                    <td><a href="#!/tasks/{{t.projectId}}" class="task-link">{{t.projectName}}</a></td>
                     <td>{{t.name}}</td>
                     <td>{{t.description}}</td>
                     <td>
