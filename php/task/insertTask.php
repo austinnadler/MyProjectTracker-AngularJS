@@ -9,6 +9,8 @@
     $description = sanitize($data->description);
     $projectId = sanitize($data->projectId);
 
+    $error = 'INSERT failed in insertProject.php';
+
     try {
         $sql = 'insert into projecttracker.task (project$id, name, description) values (:projectId, :name, :description)';
         $stmt = $pdo->prepare($sql);
@@ -19,11 +21,10 @@
         $pdo = null;
         if($n == 1) {
             echo 'success';
-            // header('Location: index.php');
         } else {
-            echo 'INSERT failed in php/insertProject.php';
+            echo $error;
         }
     } catch(Exception $e) {
-        echo 'Database error in php/insertProject.php: ' . $e->getMessage();
+        echo $e->getMessage();
     }
 ?>

@@ -14,6 +14,6 @@
         $pdo = null;
         echo json_encode($rows);
     } catch(PDOException $e) {
-        echo 'Database error in php/selectAllProjects.php: ' . $e->getMessage();
+        echo $e->getMessage();
     }
 ?>

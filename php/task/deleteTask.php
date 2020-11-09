@@ -7,6 +7,8 @@
     $data = json_decode(file_get_contents('php://input')); // instead of $_POST with AngularJS
     $id = sanitize($data->id);
 
+    $error = 'DELETE failed in deleteTask.php';
+
     try {
         $n = 0;
         $sql = 'delete from projecttracker.task where id=:id;'; // Delete its tasks first
@@ -14,8 +16,13 @@
         $stmt->bindParam(':id', $id);
         $n += $stmt->execute();
         $pdo = null;
-        echo 'success';
+        if($n == 1) {
+            echo 'success';
+        } else {
+            echo $error;
+        }
+        
     } catch(Exception $e) {
-        echo 'Database error in php/deleteProject.php: ' . $e->getMessage();
+        echo $e->getMessage();
     }
 ?>

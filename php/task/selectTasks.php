@@ -14,15 +14,6 @@
         $pdo = null;
         echo json_encode($rows);
     } catch(PDOException $e) {
-        echo 'Database error in php/selectAllTasks.php: ' . $e->getMessage();
+        echo $e->getMessage();
     } 
-    /*  
-    Returns:
-        task_id
-        task_name
-        task_desc
-        project_id
-        project_name
-        project_desc  
-     */
 ?>

@@ -18,6 +18,10 @@ th {
     vertical-align: bottom;
 }
 
+td {
+    font-size: 15px;
+}
+
 .project-card {
     display: inline-block;
     text-align: left;

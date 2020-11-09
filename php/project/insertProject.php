@@ -10,6 +10,8 @@
     $area = sanitize($data->area);
     $manager = sanitize($data->manager);
 
+    $error = 'INSERT failed in insertProject.php'; 
+
     try {
         $sql = 'insert into projecttracker.project (name, description, area, manager) values (:name, :description, :area, :manager)';
         $stmt = $pdo->prepare($sql);
@@ -23,10 +25,10 @@
             echo 'success';
             // header('Location: index.php');
         } else {
-            echo 'INSERT failed in php/insertProject.php';
+            echo $error;
         }
     } catch(Exception $e) {
-        echo 'Database error in php/insertProject.php: ' . $e->getMessage();
+        echo $e->getMessage();
     }
 ?>
 

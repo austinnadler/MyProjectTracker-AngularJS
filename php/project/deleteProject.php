@@ -20,7 +20,7 @@
         $pdo = null;
         echo 'success';
     } catch(Exception $e) {
-        echo 'Database error in php/deleteProject.php: ' . $e->getMessage();
+        echo $e->getMessage();
     }
 ?>
 

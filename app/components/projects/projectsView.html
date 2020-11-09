@@ -3,11 +3,11 @@
     <span ng-click="routeTo('tasks')"class="w3-btn route-btn w3-round w3-text-blue">Tasks</span>
 </div>
 <div class="w3-center">
-    <button ng-click="toggleProjectFormVis()" ng-show="!projectFormVis" id="toggleProjectFormVis" class="w3-large w3-btn w3-round w3-blue w3-margin"><i class="fas fa-plus"></i></button>
+    <button ng-click="showNewProjectForm()" ng-show="!projectFormVis" id="toggleProjectFormVis" class="w3-large w3-btn w3-round w3-blue w3-margin"><i class="fas fa-plus"></i></button>
 </div>
 <form ng-show="projectFormVis" class="w3-card w3-round w3-padding" style="width: 90%; max-width: 1300px; margin: auto; margin-top: 10px;">
     <h3 style="text-align: center;">New Project</h3>
-    <div class="w3-row-padding w3-large">
+    <div class="w3-row-padding">
         <div class="w3-third">
             <input ng-model="newProjectName" class="w3-input" maxlength="30" required>
             <label class="w3-large">Name</label>
@@ -21,7 +21,7 @@
             <label class="w3-large">Manager</label>
         </div>
     </div>
-    <div class="w3-large" style="margin: 0px 15px 0px 15px;">
+    <div style="margin: 0px 15px 0px 15px;">
         <textarea ng-model="newProjectDescription" class="w3-input" style="resize: none;"
         maxlength="255" required></textarea>
         <label class="w3-large">Description</label>
@@ -32,12 +32,43 @@
         class="w3-btn w3-round w3-red w3-padding">Cancel</button>
     </p>
 </form>
+
+
+<form ng-show="editProjectFormVis" class="w3-card w3-round w3-padding" style="width: 90%; max-width: 1300px; margin: auto; margin-top: 10px;">
+    <h3 style="text-align: center;">Edit <span class="w3-text-green">{{editThisProject.name}}</span></h3>
+    <div class="w3-row-padding">
+        <div class="w3-third">
+            <input ng-model="editThisProject.name" class="w3-input" maxlength="30" required>
+            <label class="w3-large">Name</label>
+        </div>
+        <div class="w3-third">
+            <input ng-model="editThisProject.area" class="w3-input" maxlength="20" required>
+            <label class="w3-large">Area</label>
+        </div>
+        <div class="w3-third">
+            <input ng-model="editThisProject.manager" class="w3-input" maxlength="20" required>
+            <label class="w3-large">Manager</label>
+        </div>
+    </div>
+    <div style="margin: 0px 15px 0px 15px;">
+        <textarea ng-model="editThisProject.description" class="w3-input" style="resize: none;"
+        maxlength="255" required></textarea>
+        <label class="w3-large">Description</label>
+    </div>
+    <p class="w3-center">
+        <button ng-click="submitProjectUpdate()" class="w3-btn w3-round w3-blue w3-padding">Submit</button>
+        <button ng-click="cancelProjectUpdate()"
+        class="w3-btn w3-round w3-red w3-padding">Cancel</button>
+    </p>
+</form>
+
+
 <h1 class="w3-center">Projects</h1>
 
 <div ng-hide="$scope.projects.length == 0" style="width: 99%; max-width: 1300px; margin: auto; text-align: center;">
     <div ng-repeat="p in projects" ng-click="getTasksForProject(p.id)" class="project-card w3-card w3-round">
         <div class="button-pane">
-            <span ng-click="$event.stopPropagation();"><i class="btn fas fa-edit w3-text-blue"></i></span>
+            <span ng-click="editProject(p); $event.stopPropagation();"><i class="btn fas fa-edit w3-text-blue"></i></span>
             <span ng-click="removeProject($index, p.id); $event.stopPropagation(); "><i class="btn fas fa-trash w3-text-red"></i></span>
         </div>
         <br>
