@@ -1,11 +1,32 @@
 
-app.controller("ctrlTasks", ["$scope", "$http", "$location", "$route","$routeParams", function ($scope, $http, $location, $route,$routeParams) {
+app.controller("ctrlTasks", ["$scope", "$http", "$location", "$route","$routeParams", function ($scope, $http, $location, $route, $routeParams) {
     $scope.selectedProject = $routeParams.projectId;
     $scope.tasks = [];
     $scope.projects = [];
     $scope.taskFormVis = false;
     selectTasks();
-    selectProjects();    
+    selectProjects();
+
+    $scope.editTaskFormVis = false;
+    $scope.editThisTask;
+    var editTaskBeforeChanges;
+
+    $scope.editTask = function(t) {
+        $scope.editTaskFormVis = true;
+        $scope.editThisTask = t;
+        editTaskBeforeChanges = Object.assign({}, t);
+        $scope.taskFormVis = false;
+    }
+
+    $scope.showNewTaskForm = function() {
+        $scope.toggleTaskFormVis();
+        $scope.editTaskFormVis = false;
+    }
+
+    $scope.cancelTaskUpdate = function() {
+        $scope.tasks[$scope.tasks.indexOf($scope.editThisTask)] = Object.assign({}, editTaskBeforeChanges);
+        $scope.toggleEditTaskFormVis();
+    }
 
     $scope.routeTo = function(path) {
         $location.url(path);
@@ -16,8 +37,35 @@ app.controller("ctrlTasks", ["$scope", "$http", "$location", "$route","$routePar
         $scope.newTaskProject = $scope.newTaskName = $scope.newTaskDescription = "";
     }
 
+    $scope.toggleEditTaskFormVis = function() {
+        $scope.editTaskFormVis = !$scope.editTaskFormVis;
+        $scope.editTaskProject = null;
+    }
+
+    $scope.submitTaskUpdate = function() {
+        var id = $scope.editThisTask.id;
+        var name = $scope.editThisTask.name;
+        var description = $scope.editThisTask.description;
+
+        $http({
+            method: "post",
+            url: "php/task/updateTask.php",
+            data: { id: id, name: name, description: description }
+        }).then(function success(response) {
+            if(response.data === "success") {
+                // $scope.toggleEditProjectFormVis();
+                $route.reload();
+            } else {
+                console.log("Error updating project.\n" + response.data);
+            }            
+            // $route.reload();
+        }, function failure(response) {
+            console.log("Database error: " + response.data);
+        });
+    }
+
     $scope.addTask = function() {
-        var projectId = $scope.newTaskProject;
+        var projectId = $scope.selectedProject.id;
         var name = $scope.newTaskName;
         var description = $scope.newTaskDescription;
         var t = new Task(name, description, projectId);
@@ -29,6 +77,7 @@ app.controller("ctrlTasks", ["$scope", "$http", "$location", "$route","$routePar
         }).then(function success(response) {
             $scope.tasks.push(t);
             $route.reload();
+            console.log(response.data);
         }, function failure(response) {
             console.log("Database error" + response.data);
         });

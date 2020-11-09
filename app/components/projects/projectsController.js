@@ -17,6 +17,7 @@ app.controller("ctrlProjects", ["$scope", "$http", "$location", "$route", functi
         $scope.editProjectFormVis = true;
         $scope.editThisProject = p;
         editProjectBeforeChanges = Object.assign({}, p);
+        $scope.projectFormVis = false;
     }
 
     $scope.cancelProjectUpdate = function() {
@@ -61,12 +62,6 @@ app.controller("ctrlProjects", ["$scope", "$http", "$location", "$route", functi
     $scope.getTasksForProject = function(projectId) {
         $location.url("tasks/" + projectId);
     }
-
-    // $scope.expandProjectRow = function(index) {
-    //     if($scope.projectRowExpanded == index)  { $scope.projectRowExpanded = -1; }
-    //     else                                    { $scope.projectRowExpanded = index; }
-    // }
-
 
     $scope.showNewProjectForm = function() {
         $scope.toggleProjectFormVis();
