@@ -7,62 +7,55 @@
     <button ng-click="showNewTaskForm()" ng-hide="taskFormVis" id="toggleTaskFormVis" class="btn w3-btn w3-round w3-blue w3-margin"><i class="fas fa-plus"></i></button>
 </div>
 <!-- -->
-<form ng-show="taskFormVis" class="w3-card w3-round w3-padding" style="width: 90%; max-width: 1300px; margin: auto; margin-top: 10px;" novalidate>
-    <h3 style="text-align: center;">New Task for <span class="w3-text-green">{{selectedProject.name}}</span></h3>
+<form ng-show="taskFormVis" class="content w3-card w3-round w3-padding">
+    <h3 class="text-center">New Task for <span class="w3-text-green">{{selectedProject.name}}</span></h3>
     <div class="w3-row-padding">
-        <!-- <div class="w3-half"> -->
         <!-- ng-options is similar to sql -- select p.id AS p.name to show the project name but give the <option> the id as the value -->
-        <!-- <select ng-model="newTaskProject" ng-options="p.id as p.name for p in projects" class="w3-select" required></select>
-        <label class="w3-large">Project</label>
-        </div> -->
+        <!-- <div class="w3-half"><select ng-model="newTaskProject" ng-options="p.id as p.name for p in projects" class="w3-select" required></select><label class="w3-large">Project</label></div> -->
         <div>
-            <input ng-model="newTaskName" class="w3-input" maxlength="30" required>
+            <input ng-model="newTaskName" name="newTaskName" class="w3-input" maxlength="30" required>
             <label class="w3-large">Name</label>
         </div>
     </div>
-    <div style="margin: 0px 15px 0px 15px;">
-        <textarea ng-model="newTaskDescription" class="w3-input" style="resize: vertical;" maxlength="255" required></textarea>
+    <div class="desc-container">
+        <textarea ng-model="newTaskDescription" name="newTaskDescription" class="w3-input" maxlength="255" required></textarea>
         <label class="w3-large">Description</label>
     </div>
     <p class="w3-center">
-        <button ng-click="addTask()" class="w3-btn btn w3-round w3-blue w3-padding">Submit</button>
+        <button ng-click="createTask()" class="w3-btn btn w3-round w3-blue w3-padding">Submit</button>
         <button ng-click="toggleTaskFormVis()"
         class="w3-btn btn w3-round w3-red w3-padding">Cancel</button>
     </p>
 </form>
-<form ng-show="editTaskFormVis" class="w3-card w3-round w3-padding" style="width: 90%; max-width: 1300px; margin: auto; margin-top: 10px;" novalidate>
-    <h3 style="text-align: center;">Edit Task <span class="w3-text-green">{{editThisTask.name}}</span></h3>
+<form ng-show="editTaskFormVis" class="content w3-card w3-round w3-padding">
+    <h3 class="text-center">Edit Task <span class="w3-text-green">{{editThisTask.name}}</span></h3>
     <div class="w3-row-padding">
-        <!-- <div class="w3-half"> -->
         <!-- ng-options is similar to sql -- select p.id AS p.name to show the project name but give the <option> the id as the value -->
-        <!-- <select ng-model="newTaskProject" ng-options="p.id as p.name for p in projects" class="w3-select" required></select>
-        <label class="w3-large">Project</label>
-        </div> -->
+        <!-- <div class="w3-half"><select ng-model="newTaskProject" ng-options="p.id as p.name for p in projects" class="w3-select" required></select><label class="w3-large">Project</label></div> -->
         <div>
-            <input ng-model="editThisTask.name" class="w3-input" maxlength="30" required>
+            <input ng-model="editThisTask.name" name="editThisTaskName" class="w3-input" maxlength="30" required>
             <label class="w3-large">Name</label>
         </div>
     </div>
-    <div style="margin: 0px 15px 0px 15px;">
-        <textarea ng-model="editThisTask.description" class="w3-input" style="resize: vertical;" maxlength="255" required></textarea>
+    <div class="desc-container">
+        <textarea ng-model="editThisTask.description" name="editThisTaskDescription" class="w3-input" maxlength="255" required></textarea>
         <label class="w3-large">Description</label>
     </div>
     <p class="w3-center">
-        <button ng-click="submitTaskUpdate()" class="w3-btn btn w3-round w3-blue w3-padding">Submit</button>
+        <button ng-click="updateTask()" class="w3-btn btn w3-round w3-blue w3-padding">Submit</button>
         <button ng-click="cancelTaskUpdate()"
         class="w3-btn btn w3-round w3-red w3-padding">Cancel</button>
     </p>
 </form>
 <div ng-hide="tasks.length == 0">
     <h1 class="w3-center">Tasks <span ng-show="selectedProject">for <span class="w3-text-green">{{selectedProject.name}}</span></span></h1>
-    <div class="w3-card w3-round" style="width: 90%; max-width: 1300px; margin: auto; margin-top: 10px;">
+    <div class="w3-card w3-round content">
         <table class="w3-table w3-bordered w3-large">
             <thead>
                 <th style="width: 20%; vertical-align: bottom;">Project</th>
                 <th style="width: 20%; vertical-align: bottom;">Name</th>
-                <th style="width: 58%; vertical-align: bottom;">Description</th>
-                <th style="width: 1%;"></th>
-                <th style="width: 1%;"></th>
+                <th style="width: 45%; vertical-align: bottom;">Description</th>
+                <th style="width: 15%;"></th>
             </thead>
             <tbody>
                 <tr ng-repeat="t in tasks | orderBy: 'projectName'">
@@ -70,10 +63,8 @@
                     <td>{{t.name}}</td>
                     <td>{{t.description}}</td>
                     <td>
-                        <span ng-click="editTask(t);"><i class="btn fas fa-edit w3-text-blue"></i></span>
-                    </td>
-                    <td>
-                        <span ng-click="removeTask($index, t.id)" style="cursor: pointer;" class="btn w3-right w3-margin-right"><i class="fas fa-trash w3-text-red"></i></span>
+                        <button type="submit" ng-click="editTask(t);"class="btn w3-right w3-margin-right"><i class="fas fa-edit w3-text-blue"></i></button>
+                        <button type="button" ng-click="deleteTask($index, t.id)" class="btn w3-right w3-margin-right"><i class="fas fa-trash w3-text-red"></i></button>
                     </td>
                 </tr>
             </tbody>

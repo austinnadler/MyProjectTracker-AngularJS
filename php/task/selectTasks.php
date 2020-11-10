@@ -4,7 +4,11 @@
     ini_set('display_errors', '1');
     include '../inc.db.php';
 
+    // $data = json_decode(file_get_contents('php://input')); // instead of $_POST with AngularJS
+    // $projectId = $data->projectId;
+
     try {
+
         $sql = 'select t.id as task_id, t.project$id as project_id, t.name as task_name, t.description as task_desc, p.name as project_name, p.description as project_desc from projecttracker.task as t, projecttracker.project as p where p.id = t.project$id';
         $statement = $pdo->query($sql);
         $rows = [];

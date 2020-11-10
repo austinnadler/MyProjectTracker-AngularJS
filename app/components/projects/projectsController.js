@@ -1,15 +1,10 @@
-//
-// Projects Controller
-//
-
 app.controller("ctrlProjects", ["$scope", "$http", "$location", "$route", function ($scope, $http, $location, $route) {
-
     $scope.projects = [];
     $scope.projectRowExpanded = -1;   
     $scope.projectFormVis = false;
+    $scope.editProjectFormVis = false;
     selectAllProjects();
 
-    $scope.editProjectFormVis = false;
     $scope.editThisProject;
     var editProjectBeforeChanges;
 
@@ -30,13 +25,66 @@ app.controller("ctrlProjects", ["$scope", "$http", "$location", "$route", functi
         $scope.editThisProject = null;
     }
 
-    $scope.submitProjectUpdate = function() {
+
+    $scope.showNewProjectForm = function() {
+        $scope.toggleProjectFormVis();
+        $scope.editProjectFormVis = false;
+    }
+
+    $scope.toggleProjectFormVis = function() {
+        $scope.projectFormVis = !$scope.projectFormVis;
+        $scope.newProjectName = $scope.newProjectDescription = $scope.newProjectArea = $scope.newProjectManager = "";
+    }
+
+    $scope.routeTo = function(pId) {
+        $location.url('tasks/' + pId);
+    }
+
+    //
+    //  $http
+    //
+
+    function selectAllProjects() {
+        $http({
+            method: "get",
+            url: "php/project/selectProjects.php"
+        }).then(function success(response) {
+            var arr = response.data;            
+            for(var i = 0; i < arr.length; i++) {
+                $scope.projects.push(new Project(arr[i].name, arr[i].description, arr[i].area, arr[i].manager, arr[i].id));
+            }
+        }, function failure(response) {
+            console.log("Database error: " + response.data);
+        });
+    }
+
+    $scope.createProject = function() {
+        var name = $scope.newProjectName;
+        var description = $scope.newProjectDescription;
+        var area = $scope.newProjectArea;
+        var manager = $scope.newProjectManager;
+        if(!name || !description || !area || !manager) { return; }
+        var p = new Project(name, description, area, manager);        
+
+        $http({
+            method: "put",
+            url: "php/project/insertProject.php",
+            data: { name: name, description: description, area: area, manager: manager }
+        }).then(function success(response) {
+            $scope.projects.push(p);
+            $route.reload();      
+        }, function failure(response) {
+            console.log("Database error: " + response.data);
+        });
+    }
+    
+    $scope.updateProject = function() {
         var id = $scope.editThisProject.id;
         var name = $scope.editThisProject.name;
         var area = $scope.editThisProject.area;
         var manager = $scope.editThisProject.manager;
         var description = $scope.editThisProject.description;
-        // console.log(`${name} ${description} ${area} ${manager}`);
+        if(!name || !description || !area || !manager) { return; }
 
         $http({
             method: "post",
@@ -55,41 +103,7 @@ app.controller("ctrlProjects", ["$scope", "$http", "$location", "$route", functi
         });
     }
 
-    $scope.getTasksForProject = function(projectId) {
-        $location.url("tasks/" + projectId);
-    }
-
-    $scope.showNewProjectForm = function() {
-        $scope.toggleProjectFormVis();
-        $scope.editProjectFormVis = false;
-    }
-
-    $scope.toggleProjectFormVis = function() {
-        $scope.projectFormVis = !$scope.projectFormVis;
-        $scope.newProjectName = $scope.newProjectDescription = $scope.newProjectArea = $scope.newProjectManager = "";
-    }
-
-    $scope.addProject = function() {
-        if(!$scope.newProjectName || !$scope.newProjectDescription || !$scope.newProjectArea || !$scope.newProjectManager) { return; }
-        var name = $scope.newProjectName;
-        var description = $scope.newProjectDescription;
-        var area = $scope.newProjectArea;
-        var manager = $scope.newProjectManager;
-        var p = new Project(name, description, area, manager);        
-
-        $http({
-            method: "put",
-            url: "php/project/insertProject.php",
-            data: { name: name, description: description, area: area, manager: manager }
-        }).then(function success(response) {
-            $scope.projects.push(p);
-            $route.reload();      
-        }, function failure(response) {
-            console.log("Database error: " + response.data);
-        });
-    }
-
-    $scope.removeProject = function(index, recId) {       
+    $scope.deleteProject = function(index, recId) {       
         $http({
             method: "delete",
             url: "php/project/deleteProject.php",
@@ -100,20 +114,4 @@ app.controller("ctrlProjects", ["$scope", "$http", "$location", "$route", functi
             console.log("Database error: " + response.data);
         });
     }
-
-    function selectAllProjects() {
-        $http({
-            method: "get",
-            url: "php/project/selectAllProjects.php"
-        }).then(function success(response) {
-            var arr = response.data;            
-            for(var i = 0; i < arr.length; i++) {
-                $scope.projects.push(new Project(arr[i].name, arr[i].description, arr[i].area, arr[i].manager, arr[i].id));
-            }
-        }, function failure(response) {
-            console.log("Database error: " + response.data);
-        });
-    }
-
-
 }]);
