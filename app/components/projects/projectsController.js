@@ -25,7 +25,6 @@ app.controller("ctrlProjects", ["$scope", "$http", "$location", "$route", functi
         $scope.editThisProject = null;
     }
 
-
     $scope.showNewProjectForm = function() {
         $scope.toggleProjectFormVis();
         $scope.editProjectFormVis = false;

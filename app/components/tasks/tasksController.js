@@ -1,4 +1,4 @@
-app.controller("ctrlTasks", ["$scope", "$http", "$location", "$route","$routeParams", function ($scope, $http, $location, $route, $routeParams) {
+app.controller("ctrlTasks", ["$scope", "$http", "$route","$routeParams", function ($scope, $http, $route, $routeParams) {
     $scope.selectedProject = $routeParams.projectId;
     $scope.tasks = [];
     $scope.projects = [];
@@ -42,7 +42,6 @@ app.controller("ctrlTasks", ["$scope", "$http", "$location", "$route","$routePar
     //
 
     function selectTasks() {
-        console.log($scope.selectedProject);
         var id = $scope.selectedProject;
         $http({
             method: "get",
@@ -114,12 +113,10 @@ app.controller("ctrlTasks", ["$scope", "$http", "$location", "$route","$routePar
             data: { id: id, name: name, description: description }
         }).then(function success(response) {
             if(response.data === "success") {
-                // $scope.toggleEditProjectFormVis();
                 $route.reload();
             } else {
                 console.log("Error updating project.\n" + response.data);
             }            
-            // $route.reload();
         }, function failure(response) {
             console.log("Database error: " + response.data);
         });

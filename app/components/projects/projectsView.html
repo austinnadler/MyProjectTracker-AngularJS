@@ -9,20 +9,20 @@
     <h3 class="text-center">New Project</h3>
     <div class="w3-row-padding">
         <div class="w3-third">
-            <input ng-model="newProjectName" name="newProjectName" class="w3-input" maxlength="30" required>
+            <input ng-model="newProjectName" name="newProjectName" class="w3-input" maxlength="30" pattern="^[A-Za-z0-9 , . ' : / ? * & % $ # @ ! = + - _ ( ) ]+$" ng-pattern-restrict>
             <label class="w3-large">Name</label>
         </div>
         <div class="w3-third">
-            <input ng-model="newProjectArea" name="newProjectArea" class="w3-input" maxlength="20" required>
+            <input ng-model="newProjectArea" name="newProjectArea" class="w3-input" maxlength="20" pattern="^[A-Za-z0-9 , . ' : / ? * & % $ # @ ! = + - _ ( ) ]+$" ng-pattern-restrict>
             <label class="w3-large">Area</label>
         </div>
         <div class="w3-third">
-            <input ng-model="newProjectManager" name="newProjectManager" class="w3-input" maxlength="20" required>
+            <input ng-model="newProjectManager" name="newProjectManager" class="w3-input" maxlength="20" pattern="^[A-Za-z0-9 , . ' : / ? * & % $ # @ ! = + - _ ( ) ]+$" ng-pattern-restrict>
             <label class="w3-large">Manager</label>
         </div>
     </div>
     <div class="text-center">
-        <textarea ng-model="newProjectDescription" name="newProjectDescription" class="w3-input" maxlength="255" required></textarea>
+        <textarea ng-model="newProjectDescription" name="newProjectDescription" class="w3-input" maxlength="255" pattern="^[A-Za-z0-9 , . ' : / ? * & % $ # @ ! = + - _ ( ) ]+$" ng-pattern-restrict></textarea>
         <label class="w3-large">Description</label>
     </div>
     <p class="w3-center">
@@ -35,20 +35,20 @@
     <h3 class="text-center">Edit <span class="w3-text-green">{{editThisProject.name}}</span></h3>
     <div class="w3-row-padding">
         <div class="w3-third">
-            <input ng-model="editThisProject.name" name="editThisProjectName" class="w3-input" maxlength="30" required>
+            <input ng-model="editThisProject.name" name="editThisProjectName" class="w3-input" maxlength="30" pattern="^[A-Za-z0-9 , . ' : / ? * & % $ # @ ! = + - _ ( ) ]+$" ng-pattern-restrict>
             <label class="w3-large">Name</label>
         </div>
         <div class="w3-third">
-            <input ng-model="editThisProject.area" name="editThisProjectArea" class="w3-input" maxlength="20" required>
+            <input ng-model="editThisProject.area" name="editThisProjectArea" class="w3-input" maxlength="20" pattern="^[A-Za-z0-9 , . ' : / ? * & % $ # @ ! = + - _ ( ) ]+$" ng-pattern-restrict>
             <label class="w3-large">Area</label>
         </div>
         <div class="w3-third">
-            <input ng-model="editThisProject.manager" name="editThisProjectManager" class="w3-input" maxlength="20" required>
+            <input ng-model="editThisProject.manager" name="editThisProjectManager" class="w3-input" maxlength="20" pattern="^[A-Za-z0-9 , . ' : / ? * & % $ # @ ! = + - _ ( ) ]+$" ng-pattern-restrict>
             <label class="w3-large">Manager</label>
         </div>
     </div>
     <div class="text-center">
-        <textarea ng-model="editThisProject.description" name="editThisProjectDescription" class="w3-input" maxlength="255" required></textarea>
+        <textarea ng-model="editThisProject.description" name="editThisProjectDescription" class="w3-input" maxlength="255" pattern="^[A-Za-z0-9 , . ' : / ? * & % $ # @ ! = + - _ ( ) ]+$" ng-pattern-restrict></textarea>
         <label class="w3-large">Description</label>
     </div>
     <p class="w3-center">
@@ -59,8 +59,8 @@
 </form>
 <h1 class="w3-center">Projects</h1>
 <div class="widget-container">
-    <!-- ng-click has to be used w a function here to allow $event.stopPropogation() on spans below -->
-    <div ng-repeat="p in projects" ng-click="routeTo(p.id);" class="project-card w3-card w3-round">
+    <!-- instead of href ng-click has to be used w a function to allow stopPropogation() on spans below -->
+    <div ng-repeat="p in projects" ng-click="routeTo(p.id)" class="project-card w3-card w3-round">
         <div class="button-pane">
             <button type="submit" ng-click="editProject(p); $event.stopPropagation();" class="btn"><i class="fas fa-edit w3-text-blue"></i></button>
             <button type="button" ng-click="deleteProject($index, p.id); $event.stopPropagation();" class="btn"><i class="fas fa-trash w3-text-red"></i></button>
