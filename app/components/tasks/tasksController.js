@@ -52,10 +52,7 @@ app.controller("ctrlTasks", ["$scope", "$http", "$route","$routeParams", functio
             var arr = response.data;
             for(var i = 0; i < arr.length; i++) {
                 var t = arr[i];
-                if($scope.selectedProject) {
-                    if(t.project_id == $scope.selectedProject)
-                        $scope.tasks.push(new Task(t.task_name, t.task_desc, t.project_id, t.project_name, t.project_desc, t.task_id));
-                } else {
+                if($scope.selectedProject && t.project_id == $scope.selectedProject) {
                     $scope.tasks.push(new Task(t.task_name, t.task_desc, t.project_id, t.project_name, t.project_desc, t.task_id));
                 }
             }
@@ -72,9 +69,8 @@ app.controller("ctrlTasks", ["$scope", "$http", "$route","$routeParams", functio
             var arr = response.data;            
             for(var i = 0; i < arr.length; i++) {
                 $scope.projects.push(new Project(arr[i].name, arr[i].description, arr[i].area, arr[i].manager, arr[i].id));
-                if($scope.selectedProject) {
-                    if(arr[i].id == $scope.selectedProject)
-                        $scope.selectedProject = arr[i];
+                if($scope.selectedProject && arr[i].id == $scope.selectedProject) {                       
+                    $scope.selectedProject = arr[i];
                 } 
             }
         }, function failure(response) {

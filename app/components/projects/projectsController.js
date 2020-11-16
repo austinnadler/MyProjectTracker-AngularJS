@@ -50,6 +50,7 @@ app.controller("ctrlProjects", ["$scope", "$http", "$location", "$route", functi
         }).then(function success(response) {
             var arr = response.data;            
             for(var i = 0; i < arr.length; i++) {
+                if(arr[i].name != null)
                 $scope.projects.push(new Project(arr[i].name, arr[i].description, arr[i].area, arr[i].manager, arr[i].id));
             }
         }, function failure(response) {
